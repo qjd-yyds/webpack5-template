@@ -4,6 +4,7 @@
   "main": "main.js",
   "license": "MIT",
   "scripts": {
+    "preinstall": "node scripts/checkYarn.js",
     "build": "webpack",
     "dev": "webpack serve --open --progress"
   },
