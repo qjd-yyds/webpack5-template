@@ -8,32 +8,26 @@ canvas.height = window.innerHeight;
 // 建立canvas画布
 const ctx = canvas.getContext('2d');
 ctx.strokeStyle = 'yellow';
-ctx.fillStyle = 'red';
-ctx.lineWidth = 40;
+ctx.fillStyle = 'blue';
 
-// 绘制脸
-ctx.rect(50, 250, 400, 200);
+// 切换画布起始点
+ctx.translate(canvas.width / 2, canvas.height / 2);
+ctx.beginPath();
+// 移动到绘制起点0,0
+ctx.moveTo(0, 0);
+// 绘制二次贝塞尔曲线
+ctx.quadraticCurveTo(50, -50, 50, -100);
+// 绘制圆弧
+ctx.arc(0, -100, 50, 0, Math.PI, true);
+// 绘制二次贝塞尔曲线
+ctx.quadraticCurveTo(-50, -50, 0, 0);
+// 画三角形
+ctx.lineTo(-8, 8);
+ctx.lineTo(8, 8);
+// ctx.bezierCurveTo()
+
 ctx.fill();
-ctx.stroke();
-
-// 绘制嘴巴
 ctx.beginPath();
-ctx.moveTo(150, 400);
-ctx.lineTo(350, 400);
-ctx.stroke();
-
-// 绘制眼睛
-ctx.clearRect(50, 300, 400, 50);
-ctx.beginPath();
-ctx.arc(150, 330, 20, 0, Math.PI * 2);
-ctx.moveTo(350 - 20, 340);
-ctx.arc(350, 340, 20, Math.PI, Math.PI * 2);
-ctx.fill();
-
-// 绘制头发
-ctx.beginPath();
-ctx.moveTo(50, 50);
-ctx.bezierCurveTo(150, 50, 150, 250, 250, 250);
-ctx.moveTo(250, 250);
-ctx.bezierCurveTo(350, 250, 350, 50, 450, 50);
+ctx.moveTo(0, 8);
+ctx.bezierCurveTo(40, 40, 40, 200, 200, 200);
 ctx.stroke();
