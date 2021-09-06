@@ -1,4 +1,5 @@
 import "./styles/style.css";
+// 霓虹灯
 // 不兼容ie8
 const canvas = document.querySelector("#canvas");
 // 最好不要使用css控制尺寸，会影响清晰度
@@ -7,6 +8,3 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 // 建立canvas画布
 const ctx = canvas.getContext("2d");
-ctx.strokeStyle = "yellow";
-ctx.fillStyle = "blue";
-ctx.lineWidth = "10";
