@@ -21,7 +21,7 @@ ctx.lineWidth = "10";
  * lineDashOffset 虚线偏移量
  * */
 /**
- * @description lineCap 描边端点样式 
+ * @description lineCap 描边端点样式
  * butt 默认
  * round 圆形
  * square 方形
@@ -90,22 +90,22 @@ ctx.restore();
  * @description setLineDash 虚线
  * 顺序是实线=》虚线=》实线=》虚线
  * */
- ctx.save();
- ctx.setLineDash([30,60,90])
- ctx.beginPath();
- ctx.moveTo(550, 20);
- ctx.lineTo(900, 20);
- ctx.stroke();
- ctx.restore();
+ctx.save();
+ctx.setLineDash([30, 60, 90]);
+ctx.beginPath();
+ctx.moveTo(550, 20);
+ctx.lineTo(900, 20);
+ctx.stroke();
+ctx.restore();
 /**
  * @description lineDashOffset 虚线
  * 顺序是实线=》虚线=》实线=》虚线
  * */
- ctx.save();
- ctx.setLineDash([30,60,90]);
- ctx.lineDashOffset = -30; // 向右跑
- ctx.beginPath();
- ctx.moveTo(550, 70);
- ctx.lineTo(900, 70);
- ctx.stroke();
- ctx.restore();
+ctx.save();
+ctx.setLineDash([30, 60, 90]);
+ctx.lineDashOffset = -30; // 向右跑
+ctx.beginPath();
+ctx.moveTo(550, 70);
+ctx.lineTo(900, 70);
+ctx.stroke();
+ctx.restore();

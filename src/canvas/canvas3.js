@@ -1,12 +1,12 @@
-import './styles/style.css';
+import "./styles/style.css";
 // 不兼容ie8
-const canvas = document.querySelector('#canvas');
+const canvas = document.querySelector("#canvas");
 // 最好不要使用css控制尺寸，会影响清晰度
 // 尺寸最好在4000以内
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 // 建立canvas画布
-const ctx = canvas.getContext('2d');
+const ctx = canvas.getContext("2d");
 // 路径 beginPath()
 // 向路径添加子路径
 /**
@@ -14,8 +14,8 @@ const ctx = canvas.getContext('2d');
  * 显示路径fill() stroke()
  * */
 // 直线 lineTo(x,y) 可以追加重复
-ctx.strokeStyle = 'red';
-ctx.fillStyle = 'yellow';
+ctx.strokeStyle = "red";
+ctx.fillStyle = "yellow";
 ctx.beginPath();
 ctx.moveTo(20, 20);
 ctx.lineTo(20, 100);
@@ -50,5 +50,5 @@ ctx.stroke();
 ctx.beginPath();
 ctx.moveTo(50, 500);
 // 绘制200, 500 和200, 600 两个点 以 起始点50,500 画圆弧
-ctx.arcTo(200, 500, 200, 600,100);
+ctx.arcTo(200, 500, 200, 600, 100);
 ctx.stroke();

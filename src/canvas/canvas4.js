@@ -1,14 +1,14 @@
-import './styles/style.css';
+import "./styles/style.css";
 // 不兼容ie8
-const canvas = document.querySelector('#canvas');
+const canvas = document.querySelector("#canvas");
 // 最好不要使用css控制尺寸，会影响清晰度
 // 尺寸最好在4000以内
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 // 建立canvas画布
-const ctx = canvas.getContext('2d');
-ctx.strokeStyle = 'red';
-ctx.fillStyle = 'red';
+const ctx = canvas.getContext("2d");
+ctx.strokeStyle = "red";
+ctx.fillStyle = "red";
 
 /**
  * @description 二次贝塞尔曲线quadraticCurveTo(cpx1,cpy1,x,y)
@@ -54,4 +54,4 @@ ctx.stroke();
 
 ctx.beginPath();
 ctx.rect(300, 50, 60, 60);
-ctx.fill()
+ctx.fill();
