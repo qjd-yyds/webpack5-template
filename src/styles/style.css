@@ -10,5 +10,6 @@ button {
   background-color: black;
 }
 #canvas {
-  background-color: rgb(236, 221, 150);
+  background: url('~@/assets/demo.jpg');
+  margin: 100px;
 }

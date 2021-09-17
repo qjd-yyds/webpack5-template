@@ -17,7 +17,7 @@ const ctx = canvas.getContext("2d");
  * source-over 默认 后一个叠加前一个
  * destination-atop
  * destination-in
- * destination-out
+ * destination-out 以绘制图像减去将会图像
  * destination-over
  * lighter
  * copy
