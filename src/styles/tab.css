@@ -1,0 +1,70 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+:root {
+  --radius: 10;
+}
+.box {
+  height: 200px;
+  background: #cecece;
+}
+.tabs {
+  display: flex;
+  background: #fff;
+  list-style: none;
+  align-items: center;
+}
+.tab {
+  height: 40px;
+  margin: 0 20px;
+  padding: 0 15px;
+  position: relative;
+}
+.tab.active {
+  background: #cecece;
+  border-radius: calc(var(--radius) * 1px);
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.tab.active::after,
+.tab.active::before {
+  position: absolute;
+  content: "";
+  bottom: 0;
+  display: block;
+  width: calc(var(--radius) * 2px);
+  height: calc(var(--radius) * 2px);
+  background: #fff;
+  z-index: 2;
+  border-radius: 50%;
+}
+.tab.active::after {
+  right: calc(var(--radius) * -2px);
+}
+.tab.active::before {
+  left: calc(var(--radius) * -2px);
+}
+.tab > span {
+  border-right: 1px solid #cecece;
+  line-height: 40px;
+}
+
+.tab.active > span::before,
+.tab.active > span::after {
+  position: absolute;
+  content: "";
+  bottom: 0;
+  display: block;
+  width: calc(var(--radius) * 1px);
+  height: calc(var(--radius) * 1px);
+  background: #cecece;
+  z-index: 1;
+}
+.tab.active > span::before {
+  left: calc(var(--radius) * -1px);
+}
+.tab.active > span::after {
+  right: calc(var(--radius) * -1px);
+}
