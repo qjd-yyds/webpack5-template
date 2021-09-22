@@ -9,7 +9,3 @@ button {
   color: #fff;
   background-color: black;
 }
-#canvas {
-  background: url('~@/assets/demo.jpg');
-  margin: 100px;
-}
