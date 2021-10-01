@@ -1,11 +1,14 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const path = require("path");
 module.exports = {
-  entry: path.resolve(__dirname, "src/main.js"),
+  entry: {
+    canvas: path.resolve(__dirname, "src/canvas.js"),
+    drag: path.resolve(__dirname, "src/drag.js"),
+  },
   mode: "development",
   devtool: "eval-source-map",
   output: {
-    filename: "bundle.js",
+    filename: "[name].bundle.js",
     path: path.resolve(__dirname, "dist"),
     clean: true,
   },
@@ -41,8 +44,22 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: "public/index.html",
+      template: "public/canvas.html",
+      filename: "canvas.html",
       hash: true,
+      chunks: ["canvas"],
+      minify: {
+        collapseInlineTagWhitespace: true, // 折叠空白压缩代码
+      },
+    }),
+    new HtmlWebpackPlugin({
+      template: "public/drag.html",
+      filename: "drag.html",
+      hash: true,
+      chunks: ["drag"],
+      minify: {
+        collapseInlineTagWhitespace: true, // 折叠空白压缩代码
+      },
     }),
   ],
 };
