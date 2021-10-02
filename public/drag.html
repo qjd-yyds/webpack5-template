@@ -1,12 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>drag</title>
-</head>
-<body>
-  <div>我是drag</div>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>drag</title>
+    <style>
+      #box1 {
+        width: 100px;
+        height: 100px;
+        background-color: red;
+      }
+      #box2 {
+        width: 200px;
+        height: 200px;
+        background-color: yellow;
+        position: absolute;
+        left: 300px;
+        top: 200px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="box1" draggable="true"></div>
+    <div id="box2"></div>
+    <script>
+      const box1 = document.querySelector("#box1");
+      const box2 = document.querySelector("#box2");
+      box1.ondragstart = function (e) {
+        console.log("start");
+        e.dataTransfer.setData("text", "#box1");
+      };
+      box1.ondrag = function () {
+        // console.log("drag");
+      };
+      box1.ondragend = function () {
+        // console.log("dragend");
+      };
+      box2.ondragenter = function () {
+        console.log("dragenter");
+      };
+      box2.ondragover = function (e) {
+        e.dataTransfer.dropEffect = "link"
+        // 每次触发都会重置默认行为
+        e.preventDefault();
+        console.log("dragover");
+      };
+      box2.ondragleave = function () {
+        console.log("dragleave");
+      };
+      box2.ondrop = function (e) {
+        const id = e.dataTransfer.getData("text");
+        const box1 = document.querySelector(id);
+        e.target.appendChild(box1);
+        // 当drop触发也有默认行为，如果有值传递 非链接==>跳转默认搜索引擎 链接==>跳转链接
+        // 以前写做到全平台兼容问题
+        e.preventDefault();
+        e.stopPropagation();
+        console.log("drop");
+      };
+    </script>
+  </body>
 </html>
