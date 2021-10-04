@@ -1,5 +1,6 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const path = require("path");
+const { VueLoaderPlugin } = require("vue-loader");
 module.exports = {
   entry: {
     canvas: path.resolve(__dirname, "src/canvas.js"), // 相对路径和绝对路径都可以
@@ -31,6 +32,10 @@ module.exports = {
         use: ["babel-loader"],
       },
       {
+        test: /\.vue$/i,
+        use: ["vue-loader"],
+      },
+      {
         test: /\.css$/i,
         use: ["style-loader", "css-loader"],
       },
@@ -53,6 +58,8 @@ module.exports = {
   devServer: {
     static: "./dist",
     hot: true,
+    port: 4000,
+    compress: true, // 开启gip
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -100,5 +107,6 @@ module.exports = {
         collapseInlineTagWhitespace: true, // 折叠空白压缩代码
       },
     }),
+    new VueLoaderPlugin(),
   ],
 };
