@@ -6,6 +6,7 @@ module.exports = {
     drag: path.resolve(__dirname, "src/drag.js"),
     audio: path.resolve(__dirname, "src/audio.js"),
     less: path.resolve(__dirname, "src/less.js"),
+    main: path.resolve(__dirname, "src/main.js"),
   },
   mode: "development",
   devtool: "eval-source-map",
@@ -25,12 +26,17 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.js$/i,
+        exclude: /node_modules/, // 不包含node_modules
+        use: ["babel-loader"],
+      },
+      {
         test: /\.css$/i,
         use: ["style-loader", "css-loader"],
       },
       {
         test: /\.less$/i,
-        use: ["style-loader", "css-loader","less-loader"],
+        use: ["style-loader", "css-loader", "less-loader"],
       },
       {
         // 处理图片文件
@@ -81,6 +87,15 @@ module.exports = {
       filename: "less.html",
       hash: true,
       chunks: ["less"],
+      minify: {
+        collapseInlineTagWhitespace: true, // 折叠空白压缩代码
+      },
+    }),
+    new HtmlWebpackPlugin({
+      template: "public/index.html",
+      filename: "index.html",
+      hash: true,
+      chunks: ["main"],
       minify: {
         collapseInlineTagWhitespace: true, // 折叠空白压缩代码
       },
