@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>开课吧-WEB高级工程师</title>
+	<link rel="stylesheet" href="./css/music.css" />
+</head>
+<body>
+	<div class="btnarea">
+		<div class="line1">
+			<div class="arc1 btn">轻柔</div>
+		</div>
+		<div class="line2">
+			<div class="arc2 btn">节奏</div>
+		</div>
+		<div class="line3">
+			<div class="arc3 btn">DJ</div>
+		</div>
+		<div class="line4">
+			<div class="arc4 btn">纯音乐</div>
+		</div>
+		<div class="line5">
+			<div class="arc5" id="stop_btn">停止</div>
+		</div>
+	</div>
+	<div class="div1">
+		<ul class="oUl">
+			<li>
+				<img src="@/assets/audiodemo/1-1.png">
+			</li>
+			<li>
+				<img src="@/assets/audiodemo/2-2.png">
+			</li>
+			<li>
+				<img src="@/assets/audiodemo/3-3.png">
+			</li>
+			<li>
+				<img src="@/assets/audiodemo/4-4.png">
+			</li>
+			<li>
+				<img src="@/assets/audiodemo/5-5.png">
+			</li>
+			<li>
+				<img src="@/assets/audiodemo/6-6.png">
+			</li>
+			<li>
+				<img src="@/assets/audiodemo/7-7.png">
+			</li>
+		</ul>
+    </div>
+<script>
+ // 创建音频环境，
+function createAudio(src) {
+    if (window._audio) {
+        window._audio.pause();
+    }
+    window._audio = new Audio(src);
+    window._audio.addEventListener('canplay', () => {
+        try{
+            window._audio.play();
+            window._audioContext = new AudioContext();
+            window._source = window._audioContext.createMediaElementSource(window._audio);
+            window._analyser = window._audioContext.createAnalyser();
+            window._source.connect(window._analyser);
+            window._analyser.connect(window._audioContext.destination);
+        } catch(e){
+        }
+    });
+}   
+// 关闭音频
+function closeAudio(){
+    window._audio.pause();
+}
+// 获取音频数据 
+function getAudioData(length) {
+    length = length || 7;
+    var arr = [];
+    if (!window._analyser) {
+        for (var i = 0; i < length; i++) {
+            arr.push(0);
+        }
+        return arr;
+    }
+    var freqArray = new Uint8Array(window._analyser.frequencyBinCount);
+    window._analyser.getByteFrequencyData(freqArray);
+   
+    var step = Math.round(freqArray.length / (length+1));
+    for (var i = 0; i < length; i++) {
+        arr.push(freqArray[i * step]);
+    }
+    if(window._audio.currentTime >= window._audio.duration){
+        window._audio.currentTime = 0;
+    }
+    arr.currentTime = window._audio.currentTime;
+    arr.duration = window._audio.duration;
+    return arr;
+}
+
+var btns = document.querySelectorAll(".btnarea .btn");
+var imgs = document.querySelectorAll(".oUl li img");
+var stop_btn = document.querySelector("#stop_btn");
+var musicData = [
+    './resource/mo.mp3',
+    './resource/Rihanna - Only Girl (In The World).mp3',
+    './resource/Remix.mp3',
+    './resource/Neptune Illusion Dennis Kuo .mp3'
+];
+let colors = [
+    '#ff5f5b',
+    '#ffb66e',
+    '#ffd96d',
+    '#e8f898',
+    '#8cf6f3',
+    '#92aef0',
+    '#b897e4'
+];
+var timer = null;
+for(var i = 0; i < btns.length; i++){
+    btns[i].index = i;
+    btns[i].onclick = function(){
+        createAudio(musicData[this.index]);
+        let now = btns[this.index];
+        for(var i = 0; i < btns.length; i++){
+            btns[i].style.backgroundColor = "";
+            btns[i].style.color = "";
+        }
+        btns[this.index].style.backgroundColor = colors[this.index];
+        now.style.color = "#fff";
+        clearInterval(timer);
+        timer = setInterval(function(){
+            var audioData = getAudioData();
+            var scale = audioData.reduce(function(n1,n2){
+                    return n1 + n2;
+            },0);
+            imgs.forEach(function(item,index){
+                item.style.top = -audioData[index] + "px";
+            });
+            now.style.transform = "scale("+(.7 + scale/2000)+")";
+        },20);
+    };    
+}
+stop_btn.onclick = function(){
+    closeAudio();
+    clearInterval(timer);
+};
+</script>
+</body>
+</html>

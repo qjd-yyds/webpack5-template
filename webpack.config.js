@@ -4,6 +4,7 @@ module.exports = {
   entry: {
     canvas: path.resolve(__dirname, "src/canvas.js"),
     drag: path.resolve(__dirname, "src/drag.js"),
+    audio: path.resolve(__dirname, "src/audio.js"),
   },
   mode: "development",
   devtool: "eval-source-map",
@@ -57,6 +58,15 @@ module.exports = {
       filename: "drag.html",
       hash: true,
       chunks: ["drag"],
+      minify: {
+        collapseInlineTagWhitespace: true, // 折叠空白压缩代码
+      },
+    }),
+    new HtmlWebpackPlugin({
+      template: "public/audio.html",
+      filename: "audio.html",
+      hash: true,
+      chunks: ["audio"],
       minify: {
         collapseInlineTagWhitespace: true, // 折叠空白压缩代码
       },
