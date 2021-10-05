@@ -1,18 +1,25 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const path = require("path");
 const { VueLoaderPlugin } = require("vue-loader");
+const TerserPlugin = require("terser-webpack-plugin");
 module.exports = {
   entry: {
     canvas: path.resolve(__dirname, "src/canvas.js"), // 相对路径和绝对路径都可以
     drag: path.resolve(__dirname, "src/drag.js"),
     audio: path.resolve(__dirname, "src/audio.js"),
     less: path.resolve(__dirname, "src/less.js"),
-    main: path.resolve(__dirname, "src/main.js"),
+    // 可写成键值对形式
+    main: {
+      import: path.resolve(__dirname, "src/main.js"),
+      dependOn: "lodash",
+    },
+    // 第三方包单独打包
+    lodash: "lodash",
   },
   mode: "development",
   devtool: "eval-source-map",
   output: {
-    filename: "[name].bundle.js",
+    filename: "js/[name].bundle.js",
     path: path.resolve(__dirname, "dist"), // 要求绝对路径
     clean: true,
   },
@@ -60,6 +67,15 @@ module.exports = {
     hot: true,
     port: 4000,
     compress: true, // 开启gip
+  },
+  optimization: {
+    minimize: true,
+    minimizer: [
+      new TerserPlugin({
+        // 禁止剥离注释
+        extractComments: false,
+      }),
+    ],
   },
   plugins: [
     new HtmlWebpackPlugin({
