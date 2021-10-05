@@ -60,11 +60,17 @@ module.exports = {
         // 处理图片文件
         test: /\.(png|svg|jpg|jpeg|gif)$/i,
         type: "asset/resource",
+        generator: {
+          filename: "static/images/[name]_[hash].[ext]",
+        },
       },
       {
         // 处理字体文件
         test: /\.(woff|woff2|eot|ttf|otf)$/i,
         type: "asset/resource",
+        generator: {
+          filename: "static/fonts/[name]_[hash].[ext]",
+        },
       },
     ],
   },
@@ -74,8 +80,10 @@ module.exports = {
     port: 4000,
     compress: true, // 开启gip
   },
+  // 优化
   optimization: {
     minimize: true,
+    runtimeChunk: true,
     minimizer: [
       new TerserPlugin({
         // 禁止剥离注释
@@ -84,7 +92,7 @@ module.exports = {
     ],
     // 代码分割
     splitChunks: {
-      chunks: "all", // async==>异步引入 initial==>同步 all ==>两者都
+      chunks: "initial", // async==>异步引入 initial==>同步 all ==>两者都
       // minSize: 20000,
       // maxSize: 20000,
       minChunks: 1, // 最小引用次数

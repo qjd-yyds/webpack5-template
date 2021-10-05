@@ -1,5 +1,5 @@
 <template>
-  <div class="example">{{ msg }}</div>
+  <div class="example">{{ msg }}==></div>
 </template>
 
 <script>
@@ -17,7 +17,9 @@ export default {
 </script>
 
 <style>
+@import url("./styles/fonts.css");
 .example {
   color: red;
+  font-family: "FiraCode";
 }
 </style>
