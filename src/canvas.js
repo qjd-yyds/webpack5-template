@@ -1,4 +1,7 @@
 import "./styles/style.css";
+import $ from "jquery";
+import _ from "lodash";
+console.log($, _);
 //  点是否在描边里 isPointStroke
 // 不兼容ie8
 const canvas = document.querySelector("#canvas");

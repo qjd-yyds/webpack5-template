@@ -4,17 +4,23 @@ const { VueLoaderPlugin } = require("vue-loader");
 const TerserPlugin = require("terser-webpack-plugin");
 module.exports = {
   entry: {
-    canvas: path.resolve(__dirname, "src/canvas.js"), // 相对路径和绝对路径都可以
-    drag: path.resolve(__dirname, "src/drag.js"),
+    canvas: {
+      import: path.resolve(__dirname, "src/canvas.js"),
+      // dependOn: "share",
+    },
+    drag: path.resolve(__dirname, "src/drag.js"), // 相对路径和绝对路径都可以
     audio: path.resolve(__dirname, "src/audio.js"),
     less: path.resolve(__dirname, "src/less.js"),
     // 可写成键值对形式
     main: {
       import: path.resolve(__dirname, "src/main.js"),
-      dependOn: "lodash",
+      // dependOn: "share",
     },
-    // 第三方包单独打包
-    lodash: "lodash",
+    /*
+    // 第三方包单独打包,，如果没有使用splitchunk
+    // lodash: "lodash",可以单独写一个字符串
+    share: ["lodash", "jquery"],// 也可以写一个数组
+    */
   },
   mode: "development",
   devtool: "eval-source-map",
@@ -76,6 +82,28 @@ module.exports = {
         extractComments: false,
       }),
     ],
+    // 代码分割
+    splitChunks: {
+      chunks: "all", // async==>异步引入 initial==>同步 all ==>两者都
+      // minSize: 20000,
+      // maxSize: 20000,
+      minChunks: 1, // 最小引用次数
+      cacheGroups: {
+        // 匹配node__module里的文件
+        defaultVendors: {
+          minChunks: 1,
+          test: /[\\/]node_modules[\\/]/,
+          filename: "js/[contenthash:8]_vendor.js",
+          priority: -10, // 优先级
+        },
+        // 其他默认文件
+        default: {
+          minChunks: 2, // 最小引用2次
+          filename: "js/[contenthash:8]_qjdyyds.js",
+          priority: -20,
+        },
+      },
+    },
   },
   plugins: [
     new HtmlWebpackPlugin({
