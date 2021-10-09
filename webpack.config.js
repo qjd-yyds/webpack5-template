@@ -2,6 +2,10 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const path = require("path");
 const { VueLoaderPlugin } = require("vue-loader");
 const TerserPlugin = require("terser-webpack-plugin");
+// 抽离css成单独文件
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+// 压缩输出
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 module.exports = {
   entry: {
     canvas: {
@@ -50,7 +54,8 @@ module.exports = {
       },
       {
         test: /\.css$/i,
-        use: ["style-loader", "css-loader"],
+        exclude: /node_modules/,
+        use: [MiniCssExtractPlugin.loader, "css-loader", "postcss-loader"],
       },
       {
         test: /\.less$/i,
@@ -88,6 +93,13 @@ module.exports = {
       new TerserPlugin({
         // 禁止剥离注释
         extractComments: false,
+      }),
+      new CssMinimizerPlugin({
+        parallel: true, // 可省略，默认开启并行
+        minimizerOptions: {
+          //  cssnano-preset-advanced需额外安装
+          preset: "advanced"
+        },
       }),
     ],
     // 代码分割
@@ -160,5 +172,10 @@ module.exports = {
       },
     }),
     new VueLoaderPlugin(),
+    // css 抽离
+    new MiniCssExtractPlugin({
+      filename: "static/css/[name].[contenthash:8].css",
+      chunkFilename: "static/css/[id].css",
+    }),
   ],
 };
